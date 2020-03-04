@@ -38,12 +38,9 @@ public class TaskManagementServiceImpl implements TaskManagementService {
 	
 	@Autowired
 	private ProjectTaskRepository projectTaskRepository;
-	
-	private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
 	@Override
 	public TaskManagement saveTasks(TaskManagement taskManagement) {
-		// TODO Auto-generated method stub
 		try {
 		Project project = new Project();
 		project.setProjectName(taskManagement.getProjectName());
@@ -79,7 +76,7 @@ public class TaskManagementServiceImpl implements TaskManagementService {
 			projectTaskRepository.save(projectTask);
 		}
 		} catch (Exception e) {
-			log.error("Exception occured while inserting data: {}", e);
+			//log.error("Exception occured while inserting data: {}", e);
 			return null;
 		}
 		return taskManagement;
@@ -117,16 +114,39 @@ public class TaskManagementServiceImpl implements TaskManagementService {
 			taskManagement.setProjectName(project.getProjectName());
 			taskManagement.setTask(taskList);
 			
-			//taskManagement.setTask(task);
-			
 			return taskManagement;
 		}catch (Exception e) {
-			log.error("Exception occured while fetching task details: {}", e);
+			//log.error("Exception occured while fetching task details: {}", e);
+			return null;
 		}
-		
-		
-		
-		return null;
+		//return null;
 	}
 
+	@Override
+	public TaskManagement updateTaskDetails(TaskManagement taskManagement) {
+       List<Task> task = taskManagement.getTask();
+       
+       Project project = projectRepository.findByProjectName(taskManagement.getProjectName());
+		
+		for(Task t : task) {
+			ProjectTask projectTask = new ProjectTask();
+			projectTask.setProjectTaskId(t.getTaskId());
+			projectTask.setProjectId(project.getProjectId());
+			projectTask.setTaskName(t.getTaskName());
+			projectTask.setTaskDescription(t.getTaskDescription());
+			projectTask.setTaskStatus(t.getTaskStatus());
+			projectTask.setStartDate(LocalDateTime.parse(t.getStartDate()));
+			projectTask.setEndDate(LocalDateTime.parse(t.getEndDate()));
+			if(!Strings.isNullOrEmpty(t.getStartWorkDate())) {
+				projectTask.setStartWorkDate(LocalDateTime.parse(t.getStartWorkDate()));
+			}
+			
+			if(!Strings.isNullOrEmpty(t.getEndWorkDate())) {
+				projectTask.setEndWorkDate(LocalDateTime.parse(t.getEndWorkDate()));
+			}
+			
+			projectTaskRepository.save(projectTask);
+	}
+   return taskManagement;
+	}
 }

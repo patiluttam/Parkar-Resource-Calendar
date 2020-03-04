@@ -86,10 +86,10 @@ public class UserControllerTest {
 				                          .content(REGISTRATION_PAYLOAD)
 				                          .accept(MediaType.APPLICATION_JSON))
 		.andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
-		.andExpect(MockMvcResultMatchers.jsonPath("username").exists())
-		.andExpect(MockMvcResultMatchers.jsonPath("password").exists())
-		.andExpect(MockMvcResultMatchers.jsonPath("email").exists())
-		.andExpect(MockMvcResultMatchers.jsonPath("confirmPassword").exists())
+		.andExpect(MockMvcResultMatchers.jsonPath("$.username").exists())
+		.andExpect(MockMvcResultMatchers.jsonPath("$.password").exists())
+		.andExpect(MockMvcResultMatchers.jsonPath("$.email").exists())
+		.andExpect(MockMvcResultMatchers.jsonPath("$.confirmPassword").exists())
 		.andDo(MockMvcResultHandlers.print());
 		
 	}

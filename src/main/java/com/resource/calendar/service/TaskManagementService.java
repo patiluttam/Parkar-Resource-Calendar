@@ -8,5 +8,7 @@ public interface TaskManagementService {
 	TaskManagement saveTasks(TaskManagement taskManagement);
 
 	TaskManagement getTaskByProjectName(String projectName);
+
+	TaskManagement updateTaskDetails(TaskManagement taskManagement);
 	
 }

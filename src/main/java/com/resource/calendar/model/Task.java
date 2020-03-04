@@ -2,6 +2,7 @@ package com.resource.calendar.model;
 
 
 public class Task {
+	private Long taskId;
 	private String taskName;
 	private String taskDescription;
 	private String startDate;
@@ -9,6 +10,14 @@ public class Task {
 	private String startWorkDate;
 	private String endWorkDate;
 	private String taskStatus;
+	
+	
+	public Long getTaskId() {
+		return taskId;
+	}
+	public void setTaskId(Long taskId) {
+		this.taskId = taskId;
+	}
 	public String getTaskName() {
 		return taskName;
 	}

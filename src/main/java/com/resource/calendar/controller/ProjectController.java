@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -52,9 +53,20 @@ public class ProjectController {
 		TaskManagement task = taskManagementService.getTaskByProjectName(projectName);
 		
 		if(task != null) {
-			return new ResponseEntity<TaskManagement>(task, HttpStatus.FOUND);
+			return new ResponseEntity<TaskManagement>(task, HttpStatus.OK);
 		}
-		return null;
+		return new ResponseEntity<String>("Bad Request.", HttpStatus.BAD_REQUEST);
+		
+	}
+	
+	@PatchMapping("project/task")
+	public ResponseEntity<?> updateTaskDetails(@RequestBody TaskManagement taskManagement) {
+		TaskManagement task = taskManagementService.updateTaskDetails(taskManagement);
+		if(task != null) {
+			return new ResponseEntity<TaskManagement>(task, HttpStatus.OK);
+		}
+		
+		return new ResponseEntity<String>("Bad Request.", HttpStatus.BAD_REQUEST);
 		
 	}
 
