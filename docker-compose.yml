@@ -1,0 +1,40 @@
+version: "3.7"
+services:
+
+  app-server:
+    build:
+      context: .
+      dockerfile: DockerFile
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:h2:mem:rescaldb
+      SPRING_DATASOURCE_USERNAME: sa
+      SPRING_DATASOURCE_PASSWORD:
+    expose:
+      - "9999"
+    ports:
+      - "9999:8080"
+    networks:
+      - backend
+    restart: always
+    depends_on:
+      - db
+
+  db:
+    image: thomseno/h2
+    expose:
+      - "9200"
+    ports:
+     - "9200:9200"
+    volumes:
+      - db-data:/var/lib/h2/data
+    networks:
+      - backend
+      
+volumes:
+   db-data:
+   
+networks:
+  backend:
+
+
+    
