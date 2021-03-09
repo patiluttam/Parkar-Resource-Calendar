@@ -12,6 +12,7 @@
 	<artifactId>resource-calendar</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>resource-calendar</name>
+	
 	<description>Resource Calendar project for Spring Boot</description>
 
 	<properties>
